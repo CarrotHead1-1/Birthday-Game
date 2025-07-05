@@ -2,12 +2,22 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from contextlib import asynccontextmanager
 from database import SessionLocal, engine
 from models import Base, Character
 from seed import seedData
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    db = SessionLocal()
+    seedData(db)
+    db.close()
+
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 app.add_middleware(
@@ -19,13 +29,6 @@ app.add_middleware(
 )
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
-
-@app.on_event("startup")
-def on_startup():
-    db = SessionLocal()
-    seedData(db)
-    db.close()
-
 
 @app.get('/')
 def root():
