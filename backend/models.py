@@ -12,3 +12,11 @@ class Character(Base):
     age = Column(String(4), nullable=True)
     description = Column(String, nullable=True)
     image_path = Column(String, nullable=True)
+
+class Notebook(Base):
+
+    __tablename__ = "notebook"
+    id = Column(Integer, primary_key=True, index=True)
+    info = Column(String(10), nullable=True)
+    notebook_path = Column(String, nullable=True)
+

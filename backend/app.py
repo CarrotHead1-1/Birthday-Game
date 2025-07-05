@@ -1,7 +1,8 @@
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from sqlalchemy.orm import Session
 from contextlib import asynccontextmanager
 from database import SessionLocal, engine
 from models import Base, Character
@@ -33,3 +34,15 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 @app.get('/')
 def root():
     return 'Hello World'
+
+def getDb():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+@app.get("/profiles")
+def getProfiles(db : Session = Depends(getDb)):
+    return db.query(Character).all()
+
