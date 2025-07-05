@@ -1,4 +1,7 @@
 import React from "react";
+// import ProfileCard from "./EvidenceLog/ProfileCard";
+import EvidenceLogPage from "./EvidenceLog/EvidenceLogPage";
+
 
 export default async function Home() {
 
@@ -8,6 +11,7 @@ export default async function Home() {
       <div className="flex justify-between items-center mb-6">
 
       </div>
+      <EvidenceLogPage />
     </section>
   )
 }

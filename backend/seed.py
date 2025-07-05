@@ -5,23 +5,6 @@ def seedData(db: Session):
     if db.query(Character).count() == 0:
 
         characters = [
-            Character (
-                name = "Mallendra Escott",
-                age = "23",
-                description = "Sir Kevin Escott's daughter from his first wife Lilly Escott-Rossi. Sister to Kev.Jr. " \
-                "Renowned for her equestrian success but even more for partying." \
-                "That is until she suddnenly stopped appearing in the clubs months ago.",
-                image_path = "/static/Mallendra.png"
-            ),
-            Character(
-                name = "Faloozie Escott",
-                age = "39?",
-                description = "Sir Kevin's second wife." \
-                "Opinion is divided about her." \
-                "Trophey wife? Definitely. Gold Digger? Maybe." \
-                "Bimbo? To be determind",
-                image_path = "/static/Faloozie.png"
-            ),
             Character(
                 name = "Sir Kevin Escott",
                 age = "54",
@@ -32,6 +15,32 @@ def seedData(db: Session):
                 "demanding, a micro-manager but in private he is more " \
                 "compassionate.",
                 image_path = "/static/SirKevin.png"
+            ),
+            Character(
+                name = "Faloozie Escott",
+                age = "39?",
+                description = "Sir Kevin's second wife. Opinion is divided about her.\n" \
+                "Trophey wife? Definitely.\n Gold Digger? Maybe.\n Bimbo? To be determind",
+                image_path = "/static/Faloozie.png"
+            ),
+
+            Character (
+                name = "Mallendra Escott",
+                age = "23",
+                description = "Sir Kevin Escott's daughter from his first wife Lilly Escott-Rossi. Sister to Kev.Jr. " \
+                "Renowned for her equestrian success but even more for partying." \
+                "That is until she suddnenly stopped appearing in the clubs months ago.",
+                image_path = "/static/Mallendra.png"
+            ),
+            Character(
+                name = "Kev. Jr",
+                age = "24",
+                description = "Sir Kevin's other child from his first marriage, brother to" \
+                "Mallendra. His career in international rugby was cut short by a catastrophic " \
+                "shoulder injury at 18. He studied product design, following in his father's" \
+                "footsteps, balancing his studies with hardcore partying and womanising. Despite his " \
+                "reputed genius with R&D, daddy won't extend a hand of nepotism to him",
+                image_path = "/static/KevJr.png"
             ),
             Character(
                 name = "Bernardo Rossi",
@@ -50,7 +59,7 @@ def seedData(db: Session):
                 "Seamus is inscrutable. He shares a passion for fast cars with Bernardo and" \
                 "has been heard to boast about his prowess with picking stocks and " \
                 "making a killing on the stock markets",
-                image_path = "/static/Seasmus.png"
+                image_path = "/static/Seamus.png"
             ),
             Character(
                 name = "Lollyanna",
@@ -58,16 +67,7 @@ def seedData(db: Session):
                 description = "A waitress frequently hired for Escott parties",
                 image_path = "/static/Lollyanna.png"
             ),
-            Character(
-                name = "Kev. Jr",
-                age = "24",
-                description = "Sir Kevin's other child from his first marriage, brother to" \
-                "Mallendra. His career in international rugby was cut short by a catastrophic " \
-                "shoulder injury at 18. He studied product design, following in his father's" \
-                "footsteps, balancing his studies with hardcore partying and womanising. Despite his " \
-                "reputed genius with R&D, daddy won't extend a hand of nepotism to him",
-                image_path = "/static/KevJr.png"
-            )
+
         ]
         db.add_all(characters)
         db.commit()

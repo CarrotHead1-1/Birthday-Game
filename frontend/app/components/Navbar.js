@@ -7,7 +7,7 @@ const Navbar = () => {
 
                 <ul className="hidden sm:flex space-x-6 text-lg font-medium">
 
-                    <li className="hover"><Link href="/">Evidence Log </Link> </li>
+                    <li className="hover"><Link href="/EvidenceLog"> Evidence Log </Link> </li>
                 </ul>
 
             </div>
