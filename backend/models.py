@@ -20,3 +20,11 @@ class Notebook(Base):
     info = Column(String(10), nullable=True)
     notebook_path = Column(String, nullable=True)
 
+class JigsawPuzzle(Base):
+    __tablename__ = "puzzles"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=True)
+    image_path = Column(String, nullable=False)
+    rows = Column(Integer, default=4)
+    cols = Column(Integer, default=3)
+

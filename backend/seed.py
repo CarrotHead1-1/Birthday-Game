@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from models import Character
+from models import Character, JigsawPuzzle
 
-def seedData(db: Session):
+def seedCharacter(db: Session):
     if db.query(Character).count() == 0:
 
         characters = [
@@ -71,3 +71,14 @@ def seedData(db: Session):
         ]
         db.add_all(characters)
         db.commit()
+
+
+def seedPuzzles(db: Session):
+    if db.query(JigsawPuzzle).count() == 0:
+        puzzles = [
+            JigsawPuzzle (
+                name = "notebookPuzzle",
+                image_path = "/static/NotebookPuzzle.png"
+            )
+        ]
+        

@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 from contextlib import asynccontextmanager
 from database import SessionLocal, engine
-from models import Base, Character
+from models import Base, Character, JigsawPuzzle
 from seed import seedData
 Base.metadata.create_all(bind=engine)
 
@@ -46,3 +46,6 @@ def getDb():
 def getProfiles(db : Session = Depends(getDb)):
     return db.query(Character).all()
 
+@app.get("notebookPuzzle")
+def getNotebookPuzzle(db : Session = Depends(getDb)):
+    return db.query(JigsawPuzzle).get({"name" : "notebookPuzzle"})
