@@ -16,7 +16,7 @@ export default function NotebookPuzzle() {
             .then(res => res.json())
             .then(data => {
                 if (data.solved) {
-                    router.push("/EvidenceLog/notebook/notebookPage")
+                    router.push("/EvidenceLog/notebook/notebookPages")
                 } else {
                     setPuzzle(data);
                     if (data.rows && data.cols) {
