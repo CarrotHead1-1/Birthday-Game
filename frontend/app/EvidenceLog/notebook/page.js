@@ -1,7 +1,7 @@
 
 
 "use client"
-import NotebookPuzzle from "@/app/components/NotebookJigsawBoard";
+import NotebookPuzzle from "@/app/EvidenceLog/notebook/NotebookJigsawBoard";
 
 export default function NotebookPuzzlePage() {
     return (

@@ -56,7 +56,8 @@ def getNotebookPuzzle(db : Session = Depends(getDb)):
         "name" : p.name,
         "image_path" : p.image_path,
         "rows" : p.rows,
-        "cols" : p.cols
+        "cols" : p.cols,
+        "solved" : p.solved
     }
 
     return result
@@ -65,15 +66,23 @@ def getNotebookPuzzle(db : Session = Depends(getDb)):
 async def checkNotebookPuzzle(request: Request, db : Session = Depends(getDb)):
     body = await request.json()
     puzzleId = body.get("id")
-    tiles = body.get("tiles")
+    tiles = body.get("tiles")    
 
     if puzzleId is None or tiles is None:
         return {"Error" : ""}
     
     p = db.query(JigsawPuzzle).filter_by(id=puzzleId).first()
     if not p:
-        return {"Error" : "Puzzle not found"}#
-    
+        return {"Error" : "Puzzle not found"}
+
+    if p.solved:
+        return {"solved": p.solved}
+
     expected = list(range(p.rows * p.cols))
-    correct = tiles == expected
-    return {"solved": correct}
+    if tiles == expected:
+        p.solved = True
+        db.commit()
+        return {"solved": True}
+
+    return {"solved": False}
+

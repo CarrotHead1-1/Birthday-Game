@@ -1,6 +1,6 @@
 
 
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Boolean
 from database import Base
 
 
@@ -26,5 +26,5 @@ class JigsawPuzzle(Base):
     name = Column(String, nullable=True)
     image_path = Column(String, nullable=False)
     rows = Column(Integer, default=4)
-    cols = Column(Integer, default=3)
-
+    cols = Column(Integer, default=4)
+    solved = Column(Boolean, default=False)

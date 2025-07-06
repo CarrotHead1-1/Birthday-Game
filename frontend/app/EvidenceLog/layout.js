@@ -12,7 +12,7 @@ export default function EvidenceLogLayout({ children }) {
             <div>
                 <EvidenceNavbar />
 
-                <div className="containter mx-auto px-4 md:pz-8 py-4">
+                <div className="container mx-auto px-4 md:px-8 py-4">
                     <section className="flex flex-col md:flex-row md:space-x-6 justify-center items-center">
                         {children}
                     </section>

@@ -7,9 +7,9 @@ import Link from "next/link";
 export default function EvidenceLogPage() {
     const sections = [
         { name: "Profiles", href: "/EvidenceLog/profiles", description: "Veiw Character Profiles" },
-        { name: "Notebook", href: "/notebook", description: "View Mallendra's Notebook " },
-        { name: "Documents", href: "/documents", description: "View Documents" },
-        { name: "Spy Files", href: "/spyfiles", description: "View Secret Recordings and Videos" }
+        { name: "Notebook", href: "/EvidenceLog/notebook", description: "View Mallendra's Notebook " },
+        { name: "Documents", href: "/EvidenceLog/documents", description: "View Documents" },
+        { name: "Spy Files", href: "/EvidenceLog/spyfiles", description: "View Secret Recordings and Videos" }
     ];
 
     return (
