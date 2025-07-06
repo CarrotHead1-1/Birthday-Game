@@ -20,9 +20,9 @@ const EvidenceNavbar = () => {
                 <ul className="hidden sm:flex space-x-6 text-lg font-medium text-gray-400">
 
                     <li className="hover"><Link href="/EvidenceLog/profiles"> Profiles </Link> </li>
-                    <li className="hover"><Link href="/notebook"> Notebook </Link></li>
-                    <li className="hover"><Link href="/documents"> Documents </Link></li>
-                    <li className="hover"><Link href="/spyfiles"> Audio and Video Recordings </Link></li>
+                    <li className="hover"><Link href="/EvidenceLog/notebook"> Notebook </Link></li>
+                    <li className="hover"><Link href="/EvidenceLog/documents"> Documents </Link></li>
+                    <li className="hover"><Link href="/EvidenceLog/spyfiles"> Audio and Video Recordings </Link></li>
 
                 </ul>
 

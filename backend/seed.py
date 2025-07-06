@@ -81,4 +81,10 @@ def seedPuzzles(db: Session):
                 image_path = "/static/NotebookPuzzle.png"
             )
         ]
-        
+        db.add_all(puzzles)
+        db.commit()
+
+
+def seedData(db):
+    seedCharacter(db)
+    seedPuzzles(db)
