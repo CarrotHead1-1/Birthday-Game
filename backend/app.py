@@ -48,7 +48,7 @@ def getProfiles(db : Session = Depends(getDb)):
 
 @app.get("/notebookPuzzle")
 def getNotebookPuzzle(db : Session = Depends(getDb)):
-    p =  db.query(JigsawPuzzle).filter({"name" : "notebookPuzzle"}).first()
+    p =  db.query(JigsawPuzzle).filter_by(name = "notebookPuzzle").first()
     if not p:
         return {"Error" : "Puzzle not found"}
     result = {

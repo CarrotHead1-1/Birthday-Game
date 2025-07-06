@@ -1,4 +1,6 @@
 
+
+"use client"
 import NotebookPuzzle from "@/app/components/NotebookJigsawBoard";
 
 export default function NotebookPuzzlePage() {

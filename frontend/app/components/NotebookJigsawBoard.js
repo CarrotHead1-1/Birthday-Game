@@ -37,7 +37,7 @@ export default function NotebookPuzzle() {
         const response = await fetch("http://localhost:8000/checkNotebookPuzzle", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id: puzzle_id, tiles })
+            body: JSON.stringify({ id: puzzle.id, tiles })
         });
         const data = await response.json();
         setSolved(data.solved);
@@ -48,7 +48,7 @@ export default function NotebookPuzzle() {
     const pieceHeight = 100;
 
     return (
-        <div className="puzzle-contianer mx-auto text-center">
+        <div className="puzzle-container mx-auto text-center">
             <h1 className="text-2xl font-bold mb-4"> {puzzle.name} </h1>
             <div className="grid gap-1 mb-4"
                 style={{
@@ -69,8 +69,8 @@ export default function NotebookPuzzle() {
                             height: `${pieceHeight}px`,
                             backgroundImage: `url(http://localhost:8000${puzzle.image_path})`,
                             backgroundSize: `${puzzle.cols * pieceWidth}px ${puzzle.rows * pieceHeight}px`,
-                            backgroundPosition: `-${(tileIndex % puzzle.cols) * pieceWidth}px 
-                        -${Math.floor(tileIndex / puzzle.rows) * pieceHeight}`
+                            backgroundPosition: `-${(tileIndex % puzzle.rows) * pieceWidth}px 
+                        -${Math.floor(tileIndex / puzzle.cols) * pieceHeight}`
                         }}
                     />
                 ))}
