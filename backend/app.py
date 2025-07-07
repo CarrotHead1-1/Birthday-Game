@@ -86,3 +86,19 @@ async def checkNotebookPuzzle(request: Request, db : Session = Depends(getDb)):
 
     return {"solved": False}
 
+@app.get("/getNotebookPages")
+def getNotebookPages():
+    baseURL = "/static/"
+    pages =  [
+        "notebookEntry1.png",
+        "notebookEntry2.png",
+        "notebookEntry3.png",
+        "notebookEntry4.png",
+        "notebookEntry5.png",
+        "notebookEntry10.PNG",
+        "notebookEntry7.png",
+        "notebookEntry8.png",
+        "notebookEntry9.png",
+    ]
+
+    return [f"{baseURL}{page}" for page in pages]
