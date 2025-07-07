@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 from contextlib import asynccontextmanager
 from database import SessionLocal, engine
-from models import Base, Character, JigsawPuzzle
+from models import Base, Character, JigsawPuzzle, Notebook
 from seed import seedData
 Base.metadata.create_all(bind=engine)
 
@@ -87,18 +87,33 @@ async def checkNotebookPuzzle(request: Request, db : Session = Depends(getDb)):
     return {"solved": False}
 
 @app.get("/getNotebookPages")
-def getNotebookPages():
-    baseURL = "/static/"
-    pages =  [
-        "notebookEntry1.png",
-        "notebookEntry2.png",
-        "notebookEntry3.png",
-        "notebookEntry4.png",
-        "notebookEntry5.png",
-        "notebookEntry10.PNG",
-        "notebookEntry7.png",
-        "notebookEntry8.png",
-        "notebookEntry9.png",
-    ]
+def getNotebookPages(db: Session = Depends(getDb)):
+    p = db.query(Notebook).all()
 
-    return [f"{baseURL}{page}" for page in pages]
+    if not p:
+        return {"Error" : "Pages not found"}
+    
+    pages = {
+        "id" : p.id,
+        "info" : p.info,
+        "page_path" : p.page_path,
+        "accessed" : p.accessed
+    }
+
+    return pages
+
+@app.post("/checkNotebookPageAccess")
+async def checkPageAccess(request: Request, db: Session = Depends(getDb)):
+    body = await request.json()
+    pageId = body.get("id")
+
+    p = db.query(Notebook).filter_by(id = pageId).first()
+    if not p:
+        return {"Error" : "Page not found"}
+    
+    if p.accessed:
+        return {"accessed": p.accessed}
+    
+    p.accessed = True
+    db.commit()
+    return {"accessed": p.accessed}

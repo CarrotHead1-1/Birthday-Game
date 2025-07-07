@@ -23,6 +23,8 @@ export default function NotebookPages() {
         setIndex((prev) => (prev - 1 + pages.length) % pages.length)
     }
 
+
+
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-100 p-4">
             <h1 className="text-3xl font-bold mb-6"> Notebook Pages</h1>

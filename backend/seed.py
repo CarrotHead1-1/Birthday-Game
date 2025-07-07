@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models import Character, JigsawPuzzle
+from models import Character, JigsawPuzzle, Notebook, Videos
 
 def seedCharacter(db: Session):
     if db.query(Character).count() == 0:
@@ -84,7 +84,53 @@ def seedPuzzles(db: Session):
         db.add_all(puzzles)
         db.commit()
 
+def seedNotebook(db: Session):
+    if db.query(Notebook).count() == 0:
+        pages = (
+            Notebook(
+                info = "page 1",
+                notebook_path = "/static/notebookEntry1.png",
+            ),
+            Notebook(
+                info = "page 2",
+                notebook_path = "/static/notebookEntry2.png",
+            ),
+            Notebook(
+                info = "page 3",
+                notebook_path = "/static/notebookEntry3.png",
+            ),
+            Notebook(
+                info = "page 4",
+                notebook_path = "/static/notebookEntry4.png",
+            ),
+            Notebook(
+                info = "page 5",
+                notebook_path = "/static/notebookEntry5.png",
+            ),
+            Notebook(
+                info = "page 6",
+                notebook_path = "/static/notebookEntryBlank.png",
+            ),
+            Notebook(
+                info = "page 7",
+                notebook_path = "/static/notebookEntry6.png",
+            ),
+           Notebook(
+                info = "page 8",
+                notebook_path = "/static/notebookEntryBlank.png",
+            ),
+           Notebook(
+                info = "page 9",
+                notebook_path = "/static/notebookEntry7.png",
+            ),
+            Notebook(
+                info = "page 10",
+                notebook_path = "/static/notebookEntry8.png",
+            )
+        )
+
 
 def seedData(db):
     seedCharacter(db)
     seedPuzzles(db)
+    seedNotebook(db)

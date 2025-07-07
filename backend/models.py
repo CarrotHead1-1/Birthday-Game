@@ -18,7 +18,8 @@ class Notebook(Base):
     __tablename__ = "notebook"
     id = Column(Integer, primary_key=True, index=True)
     info = Column(String(10), nullable=True)
-    notebook_path = Column(String, nullable=True)
+    page_path = Column(String, nullable=True)
+    accessed = Column(Boolean, default = False)
 
 class JigsawPuzzle(Base):
     __tablename__ = "puzzles"
@@ -27,4 +28,11 @@ class JigsawPuzzle(Base):
     image_path = Column(String, nullable=False)
     rows = Column(Integer, default=4)
     cols = Column(Integer, default=4)
-    solved = Column(Boolean, default=False)
+    solved = Column(Boolean, default = False)
+
+class Videos(Base):
+    __tablename__ = "notebook"
+    id = Column(Integer, primary_key = True, index = True)
+    name = Column(String(25), nullable = True)
+    video_path = Column(String, nullable = True)
+    watched = Column(Boolean, default = False)
