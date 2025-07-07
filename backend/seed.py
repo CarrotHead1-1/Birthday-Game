@@ -128,7 +128,8 @@ def seedNotebook(db: Session):
                 notebook_path = "/static/notebookEntry8.png",
             )
         )
-
+        db.add_all(pages)
+        db.commit()
 
 def seedData(db):
     seedCharacter(db)
