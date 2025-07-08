@@ -89,43 +89,43 @@ def seedNotebook(db: Session):
         pages = (
             Notebook(
                 info = "page 1",
-                notebook_path = "/static/notebookEntry1.png",
+                page_path = "/static/notebookEntry1.png"
             ),
             Notebook(
                 info = "page 2",
-                notebook_path = "/static/notebookEntry2.png",
+                page_path = "/static/notebookEntry2.png"
             ),
             Notebook(
                 info = "page 3",
-                notebook_path = "/static/notebookEntry3.png",
+                page_path = "/static/notebookEntry3.png"
             ),
             Notebook(
                 info = "page 4",
-                notebook_path = "/static/notebookEntry4.png",
+                page_path = "/static/notebookEntry4.png"
             ),
             Notebook(
                 info = "page 5",
-                notebook_path = "/static/notebookEntry5.png",
+                page_path = "/static/notebookEntry5.png"
             ),
             Notebook(
                 info = "page 6",
-                notebook_path = "/static/notebookEntryBlank.png",
+                page_path = "/static/notebookEntryBlank.png"
             ),
             Notebook(
                 info = "page 7",
-                notebook_path = "/static/notebookEntry6.png",
+                page_path = "/static/notebookEntry6.png"
             ),
            Notebook(
                 info = "page 8",
-                notebook_path = "/static/notebookEntryBlank.png",
+                page_path = "/static/notebookEntryBlank.png"
             ),
            Notebook(
                 info = "page 9",
-                notebook_path = "/static/notebookEntry7.png",
+                page_path = "/static/notebookEntry7.png"
             ),
             Notebook(
                 info = "page 10",
-                notebook_path = "/static/notebookEntry8.png",
+                page_path = "/static/notebookEntry8.png"
             )
         )
         db.add_all(pages)

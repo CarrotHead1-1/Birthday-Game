@@ -8,7 +8,7 @@ export default function NotebookPages() {
     const [index, setIndex] = useState(0)
 
     useEffect(() => {
-        fetch(`http://localhost:8000/getNotebookPages`)
+        fetch("http://localhost:8000/getNotebookPages")
             .then(res => res.json())
             .then(data => {
                 setPages(data)
@@ -31,7 +31,7 @@ export default function NotebookPages() {
 
             <div className="relative w-full max-w-3xl overflow-hidden">
                 <img
-                    src={`http://localhost:8000${pages[index]}`}
+                    src={`http://localhost:8000/${pages[index].page_path}`}
                     alt={`Notebook Page ${index + 1}`}
                     className="w-full max-h-[80vh] object-contain transition-all duration-300"
                 />

@@ -16,6 +16,7 @@ class Character(Base):
 class Notebook(Base):
 
     __tablename__ = "notebook"
+
     id = Column(Integer, primary_key=True, index=True)
     info = Column(String(10), nullable=True)
     page_path = Column(String, nullable=True)
@@ -31,7 +32,7 @@ class JigsawPuzzle(Base):
     solved = Column(Boolean, default = False)
 
 class Videos(Base):
-    __tablename__ = "notebook"
+    __tablename__ = "videos"
     id = Column(Integer, primary_key = True, index = True)
     name = Column(String(25), nullable = True)
     video_path = Column(String, nullable = True)

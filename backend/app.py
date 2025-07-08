@@ -93,12 +93,14 @@ def getNotebookPages(db: Session = Depends(getDb)):
     if not p:
         return {"Error" : "Pages not found"}
     
-    pages = {
-        "id" : p.id,
-        "info" : p.info,
-        "page_path" : p.page_path,
-        "accessed" : p.accessed
+    pages = [{
+        "id" : page.id,
+        "info" : page.info,
+        "page_path" : page.page_path,
+        "accessed" : page.accessed
     }
+    for page in p
+    ]
 
     return pages
 
