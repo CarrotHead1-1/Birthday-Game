@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models import Character, JigsawPuzzle, Notebook, Videos
+from models import Character, JigsawPuzzle, Notebook, Documents
 
 def seedCharacter(db: Session):
     if db.query(Character).count() == 0:
@@ -130,6 +130,29 @@ def seedNotebook(db: Session):
         )
         db.add_all(pages)
         db.commit()
+
+    def seedDocuments(db: Session):
+        if db.query(Documents).count() == 0:
+            documents = (
+                # Documents(
+                # name = "House Blueprint",
+                # document_path = "/static/",
+                # locked = False
+                # ),
+                Documents(
+                    name = "Flourist Receipt",
+                    document_path = "/staic/flouristReceipt.png",
+                    locked = True
+                ),
+                Documents(
+                    name = "Doctors Perscription",
+                    document_path = "/static/doctorsPescription.png",
+                    locked = True
+                )
+            )
+        
+        db.add_all(documents)
+        db.commit
 
 def seedData(db):
     seedCharacter(db)

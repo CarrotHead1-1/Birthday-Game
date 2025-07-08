@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 from contextlib import asynccontextmanager
 from database import SessionLocal, engine
-from models import Base, Character, JigsawPuzzle, Notebook
+from models import Base, Character, JigsawPuzzle, Notebook, Documents
 from seed import seedData
 Base.metadata.create_all(bind=engine)
 
@@ -119,3 +119,19 @@ async def checkPageAccess(request: Request, db: Session = Depends(getDb)):
     p.accessed = True
     db.commit()
     return {"accessed": p.accessed}
+
+@app.get("/getDocuments")
+def getDocuments(db: Session = Depends(getDb)):
+    p = db.query(Documents).all()
+    if not p:
+        return {"Error": "Documents not Found"}
+    
+    documents = [{
+        "id": doc.id,
+        "name": doc.name,
+        "document_path": doc.document_path,
+        "locked": doc.locked
+    }
+    for doc in p
+    ]
+    return documents
