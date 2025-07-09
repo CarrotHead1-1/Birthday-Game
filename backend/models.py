@@ -42,5 +42,5 @@ class Documents(Base):
     __tablename__ = "documents"
     id = Column(Integer, primary_key= True, index = True)
     name = Column(String(35), nullable = False)
-    document_path = Column(String, nullable = True)
+    doc_path = Column(String, nullable = True)
     locked = Column(Boolean, default = True)

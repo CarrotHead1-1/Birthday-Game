@@ -117,6 +117,21 @@ async def checkPageAccess(request: Request, db: Session = Depends(getDb)):
         return {"accessed": p.accessed}
     
     p.accessed = True
+
+    # if p.id == 5:
+
+    if p.id == 7:
+        d = db.query(Documents).filter(Documents.id.in_([3])).all()
+        for doc in d:
+            if doc.locked:
+                doc.locked = False
+    
+    if p.id == 9 or p.id == 10:
+        d = db.query(Documents).filter(Documents.id._([1,2])).all()
+        for doc in d:
+            if doc.locked:
+                doc.locked = False
+                
     db.commit()
     return {"accessed": p.accessed}
 
@@ -129,9 +144,23 @@ def getDocuments(db: Session = Depends(getDb)):
     documents = [{
         "id": doc.id,
         "name": doc.name,
-        "document_path": doc.document_path,
+        "doc_path": doc.doc_path,
         "locked": doc.locked
     }
     for doc in p
     ]
     return documents
+
+@app.post("/checkUnlocked")
+async def checkDocuments(request: Request, db: Session = Depends(getDb)):
+    body = await request.json()
+    docId = body.get("id")
+
+    p = db.query(Documents).filter(id = docId).first()
+    if not p:
+        return {"Error": "Document not Found"}
+    
+    if p.locked:
+        return {"Locked": p.locked}
+    
+    return {"Locked": p.locked}

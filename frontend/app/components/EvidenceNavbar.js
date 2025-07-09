@@ -22,7 +22,8 @@ const EvidenceNavbar = () => {
                     <li className="hover"><Link href="/EvidenceLog/profiles"> Profiles </Link> </li>
                     <li className="hover"><Link href="/EvidenceLog/notebook"> Notebook </Link></li>
                     <li className="hover"><Link href="/EvidenceLog/documents"> Documents </Link></li>
-                    <li className="hover"><Link href="/EvidenceLog/spyfiles"> Audio and Video Recordings </Link></li>
+                    <li className="hover"><Link href="/EvidenceLog/spyFiles"> Audio and Video Recordings </Link></li>
+                    <li className="hover"><Link href="/EvidenceLog/answer"> Solved the Case? </Link></li>
 
                 </ul>
 

@@ -90,71 +90,111 @@ def seedNotebook(db: Session):
             Notebook(
                 info = "page 1",
                 page_path = "/static/notebookEntry1.png"
+                #nothing
             ),
             Notebook(
                 info = "page 2",
                 page_path = "/static/notebookEntry2.png"
+                #looking at bernardo
             ),
             Notebook(
                 info = "page 3",
                 page_path = "/static/notebookEntry3.png"
+                #swears
             ),
             Notebook(
                 info = "page 4",
                 page_path = "/static/notebookEntry4.png"
+                #talks about bugs
             ),
             Notebook(
                 info = "page 5",
                 page_path = "/static/notebookEntry5.png"
+                #first bug
             ),
             Notebook(
                 info = "page 6",
                 page_path = "/static/notebookEntryBlank.png"
+                #blank
             ),
             Notebook(
                 info = "page 7",
                 page_path = "/static/notebookEntry6.png"
+                #penicl rubbing
             ),
            Notebook(
                 info = "page 8",
                 page_path = "/static/notebookEntryBlank.png"
+                #blank
             ),
            Notebook(
                 info = "page 9",
                 page_path = "/static/notebookEntry7.png"
+                #people acting weird
             ),
             Notebook(
                 info = "page 10",
                 page_path = "/static/notebookEntry8.png"
+                #cameras 
+            ),
+            Notebook(
+                info = "page 11",
+                page_path = "/static/notebookEntry9.png"
+                #caymann transfer
+            ),
+            Notebook(
+                info = "page 12",
+                page_path = "/static/notebookEntry10.png"
+                #finger print puzzle
+            ),
+            Notebook(
+                info = "page 13",
+                page_path = "/static/notebookEntry11.png"
+            ),
+            Notebook(
+                info = "page 14",
+                page_path = "/static/notebookEntry12.png"
+                #submit answer
             )
+
         )
         db.add_all(pages)
         db.commit()
 
-    def seedDocuments(db: Session):
-        if db.query(Documents).count() == 0:
-            documents = (
-                # Documents(
-                # name = "House Blueprint",
-                # document_path = "/static/",
-                # locked = False
-                # ),
-                Documents(
-                    name = "Flourist Receipt",
-                    document_path = "/staic/flouristReceipt.png",
-                    locked = True
-                ),
-                Documents(
-                    name = "Doctors Perscription",
-                    document_path = "/static/doctorsPescription.png",
-                    locked = True
-                )
+def seedDocuments(db: Session):
+    if db.query(Documents).count() == 0:
+        docs = (
+            # Documents(
+            # name = "House Blueprint",
+            # document_path = "/static/",
+            # locked = False
+            # ),
+            Documents(
+                name = "Flourist Receipt",
+                doc_path = "/static/flouristReceipt.png",
+                locked = True
+            ),
+            Documents(
+                name = "Doctors Perscription",
+                doc_path = "/static/doctorsPerscription.png",
+                locked = True
+            ),
+            Documents(
+                name = "Secret Notebook Rubbing",
+                doc_path = "/static/rubbingEntry.PNG",
+                locked = True
+            ),
+            Documents(
+                name = "Bank Transfer to the Caymanns",
+                doc_path = "/static/bankTransfer.png",
+                locked = True
             )
-        
-        db.add_all(documents)
-        db.commit
+        )
+        db.add_all(docs)
+        db.commit()
 
 def seedData(db):
     seedCharacter(db)
     seedPuzzles(db)
     seedNotebook(db)
+    seedDocuments(db)
