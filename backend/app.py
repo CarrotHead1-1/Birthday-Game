@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 from contextlib import asynccontextmanager
 from database import SessionLocal, engine
-from models import Base, Character, JigsawPuzzle, Notebook, Documents
+from models import Base, Character, JigsawPuzzle, Notebook, Documents, Password, SpyFiles
 from seed import seedData
 Base.metadata.create_all(bind=engine)
 
@@ -45,6 +45,42 @@ def getDb():
 @app.get("/profiles")
 def getProfiles(db : Session = Depends(getDb)):
     return db.query(Character).all()
+
+@app.get("/characters")
+def getCharacters(db: Session = Depends(getDb)):
+    return [c.name for c in db.query(Character).filter().all()]
+
+@app.post("/checkAnswers")
+async def checkAnwsers(request: Request, db: Session = Depends(getDb)):
+    body = await request.json()
+    
+    guess =body.get("userGuesses")
+    if guess[0] == "Seamus Masters" and guess[1] == "Bernardo Rossi":
+        return {"correct": True}
+    return {"correct": False}
+
+@app.post("/checkPassword")
+async def checkPassword(request: Request, db: Session = Depends(getDb)):
+    body = await request.json()
+    guess = body.get("guess")
+
+    p = db.query(Password).filter_by(name = "spyfilePassword").first()
+
+    if p.solved:
+        return {"correctPositions": p.password}
+    
+    if not guess or len(guess) != len(p.password):
+        return {"correctPositions": [None] * len(p.password)}
+
+    correctPositions = [
+        guess[i] if guess[i] == p.password[i] else None for i in range(len(p))
+    ]
+
+    if all(d is not None for d in correctPositions):
+        p.solved = True
+        db.commit()
+
+    return {"correctPositions": correctPositions}
 
 @app.get("/notebookPuzzle")
 def getNotebookPuzzle(db : Session = Depends(getDb)):
@@ -118,20 +154,40 @@ async def checkPageAccess(request: Request, db: Session = Depends(getDb)):
     
     p.accessed = True
 
-    # if p.id == 5:
+    if p.id == 4:
+        d = db.query(SpyFiles).filter(SpyFiles.id.in_([1])).all()
+        for file in d:
+            if file.unlocked == False:
+                file.unlocked = True
+
 
     if p.id == 7:
-        d = db.query(Documents).filter(Documents.id.in_([3])).all()
+        d = db.query(Documents).filter(Documents.id.in_([4])).all()
         for doc in d:
             if doc.locked:
                 doc.locked = False
     
-    if p.id == 9 or p.id == 10:
-        d = db.query(Documents).filter(Documents.id._([1,2])).all()
+    if p.id == 10:
+        d = db.query(SpyFiles).filter(SpyFiles.id.in_([2,3])).all()
+        for file in d:
+            if file.unlocked == False:
+                file.unlocked = True
+    
+    if p.id == 11:
+        d = db.query(Documents).filter(Documents.id.in_([5,6])).all()
         for doc in d:
             if doc.locked:
                 doc.locked = False
-                
+    
+    #if p.id == 12:
+    #go to finger print file 
+
+    if p.id == 13:
+        d = db.query(Documents).filter(Documents.id.in_([7])).all()
+        for doc in d:
+            if doc.locked:
+                doc.locked = False
+
     db.commit()
     return {"accessed": p.accessed}
 
@@ -151,7 +207,7 @@ def getDocuments(db: Session = Depends(getDb)):
     ]
     return documents
 
-@app.post("/checkUnlocked")
+@app.post("/checkUnlockedDocuments")
 async def checkDocuments(request: Request, db: Session = Depends(getDb)):
     body = await request.json()
     docId = body.get("id")
@@ -164,3 +220,31 @@ async def checkDocuments(request: Request, db: Session = Depends(getDb)):
         return {"Locked": p.locked}
     
     return {"Locked": p.locked}
+
+@app.get("/getSpyFiles")
+def getSpyFiles(db: Session = Depends(getDb)):
+    p = db.query(SpyFiles).filter_by(unlocked = True).all()
+
+    files = [{
+        "id": file.id,
+        "name": file.name,
+        "spyfile_path": file.spyfile_path,
+        "accessed": file.accessed,
+        "unlocked": file.accessed
+    }
+    for file in p
+    ]
+    return files 
+
+@app.post("/checkSpyFilesUnlcoked")
+async def checkSpyFiles(request: Request, db: Session = Depends(getDb)):
+    body = await request.json()
+    fileId = body.get("id")
+
+    p = db.query(SpyFiles).filter_by(id = fileId).first()
+    if not p:
+        return {"Error" : "Spy Files not found"}
+    
+    if p.unlocked:
+        return {"unlocked": p.unlocked}
+    return {"unlocked": p.unlocked}

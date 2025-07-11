@@ -10,7 +10,7 @@ export default function EvidenceLogPage() {
         { name: "Notebook", href: "/EvidenceLog/notebook", description: "View Mallendra's Notebook " },
         { name: "Documents", href: "/EvidenceLog/documents", description: "View Documents" },
         { name: "Spy Files", href: "/EvidenceLog/spyFiles", description: "View Secret Recordings and Videos" },
-        { name: "Solve the Case", href: "/EvidenceLog/anwser", description: "Who is Guilty?" }
+        { name: "Solve the Case", href: "/EvidenceLog/answer", description: "Who is Guilty?" }
     ];
 
     return (

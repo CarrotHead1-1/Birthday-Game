@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models import Character, JigsawPuzzle, Notebook, Documents
+from models import Character, JigsawPuzzle, Notebook, Documents, Password
 
 def seedCharacter(db: Session):
     if db.query(Character).count() == 0:
@@ -67,7 +67,6 @@ def seedCharacter(db: Session):
                 description = "A waitress frequently hired for Escott parties",
                 image_path = "/static/Lollyanna.png"
             ),
-
         ]
         db.add_all(characters)
         db.commit()
@@ -164,11 +163,11 @@ def seedNotebook(db: Session):
 def seedDocuments(db: Session):
     if db.query(Documents).count() == 0:
         docs = (
-            # Documents(
-            # name = "House Blueprint",
-            # document_path = "/static/",
-            # locked = False
-            # ),
+            Documents(
+            name = "House Blueprint",
+            doc_path = "/static/houseLayout.png",
+            locked = False
+            ),
             Documents(
                 name = "Flourist Receipt",
                 doc_path = "/static/flouristReceipt.png",
@@ -185,16 +184,40 @@ def seedDocuments(db: Session):
                 locked = True
             ),
             Documents(
+                name = "Interviews",
+                doc_path = "/static/interviews/png",
+                locked = True
+            ),
+            Documents(
                 name = "Bank Transfer to the Caymanns",
                 doc_path = "/static/bankTransfer.png",
                 locked = True
+            ),
+            Documents(
+                name = "Lollyannas Caymann trip text",
+                doc_path = "/static/caymannText.png",
+                locked = True
             )
+
         )
         db.add_all(docs)
         db.commit()
+
+def seedPasswords(db: Session):
+    if db.query(Password).count() == 0:
+        passwords = [
+            Password(
+            name = "spyfilePassword",
+            password = "123456"
+            )
+        ]
+
+    db.add_all(passwords)
+    db.commit()
 
 def seedData(db):
     seedCharacter(db)
     seedPuzzles(db)
     seedNotebook(db)
     seedDocuments(db)
+    #seedPasswords(db)

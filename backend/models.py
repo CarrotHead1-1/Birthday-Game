@@ -31,12 +31,20 @@ class JigsawPuzzle(Base):
     cols = Column(Integer, default=4)
     solved = Column(Boolean, default = False)
 
-class Videos(Base):
-    __tablename__ = "videos"
+class Password(Base):
+    __tablename__ = "passwords"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable = False)
+    password = Column(String(6), nullable = False)
+    solved = Column(Boolean, default=False)
+
+class SpyFiles(Base):
+    __tablename__ = "spyFiles"
     id = Column(Integer, primary_key = True, index = True)
     name = Column(String(25), nullable = True)
-    video_path = Column(String, nullable = True)
-    watched = Column(Boolean, default = False)
+    spyfile_path = Column(String, nullable = True)
+    accessed = Column(Boolean, default = False)
+    unlocked = Column(Boolean, default=False)
 
 class Documents(Base):
     __tablename__ = "documents"
