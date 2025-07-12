@@ -9,6 +9,7 @@ export default function NotebookPuzzle() {
     const [tiles, setTiles] = useState([]);
     const [solved, setSolved] = useState(null);
     const [draggedIndex, setDraggedIndex] = useState(null);
+    const [touchDraggedIndex, setTouchDraggedIndex] = useState(null);
     const router = useRouter();
 
     const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL
@@ -45,6 +46,7 @@ export default function NotebookPuzzle() {
         setTiles(newTiles);
     };
 
+    // Desktop drag handlers
     const handleDragStart = (index) => {
         setDraggedIndex(index);
     };
@@ -59,6 +61,20 @@ export default function NotebookPuzzle() {
         setDraggedIndex(null);
     };
 
+    // Touch handlers for iPad/mobile
+    const handleTouchStart = (index) => {
+        setTouchDraggedIndex(index);
+    };
+
+    const handleTouchEnd = (index) => {
+        if (touchDraggedIndex === null || touchDraggedIndex === index) {
+            setTouchDraggedIndex(null);
+            return;
+        }
+        swap(touchDraggedIndex, index);
+        setTouchDraggedIndex(null);
+    };
+
     const check = async () => {
         const response = await fetch(`${baseURL}/checkNotebookPuzzle`, {
             method: "POST",
@@ -67,10 +83,6 @@ export default function NotebookPuzzle() {
         });
         const data = await response.json();
         setSolved(data.solved);
-
-        if (data.solved) {
-
-        }
     };
 
     if (!puzzle) return <p>Loading Puzzle...</p>;
@@ -94,18 +106,21 @@ export default function NotebookPuzzle() {
                 {tiles.map((tileIndex, i) => (
                     <div
                         key={i}
-                        className="border border-gray-300 cursor-move overflow-hidden"
+                        className={`border border-gray-300 cursor-move overflow-hidden ${touchDraggedIndex === i ? "opacity-50" : ""}`}
                         draggable
                         onDragStart={() => handleDragStart(i)}
                         onDragOver={handleDragOver}
                         onDrop={() => handleDrop(i)}
+                        onTouchStart={() => handleTouchStart(i)}
+                        onTouchEnd={() => handleTouchEnd(i)}
                         style={{
                             width: `${pieceWidth}px`,
                             height: `${pieceHeight}px`,
                             backgroundImage: `url(${baseURL}${puzzle.image_path})`,
                             backgroundSize: `${puzzle.cols * pieceWidth}px ${puzzle.rows * pieceHeight}px`,
                             backgroundPosition: `-${(tileIndex % puzzle.cols) * pieceWidth}px -${Math.floor(tileIndex / puzzle.cols) * pieceHeight}px`,
-                            backgroundRepeat: "no-repeat"
+                            backgroundRepeat: "no-repeat",
+                            touchAction: "manipulation" // helps on some touch browsers
                         }}
                     />
                 ))}

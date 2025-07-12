@@ -205,30 +205,46 @@ def seedDocuments(db: Session):
 
 def seedPasswords(db: Session):
     if db.query(Password).count() == 0:
-        passwords = [
+        passwords = (
             Password(
             name = "spyfilePassword",
-            password = "123456"
+            password = "100771"
             ),
             Password(
                 name = "biometricPassword",
                 password = "KEIB Limited"
             )
-        ]
+        )
 
-    db.add_all(passwords)
-    db.commit()
+        db.add_all(passwords)
+        db.commit()
 
 def seedStaffDatabase(db: Session):
     if db.query(StaffDatabase).count() == 0:
-        staffProfiles = [
+        staffProfiles = (
             StaffDatabase(
                 name = "Sir Kevin Escott",
                 age = "54",
-                startDate = "",
                 position = "CEO"
+            ),
+            StaffDatabase(
+                name = "Seamus Masters",
+                age = "45",
+                position = "CFO"
+            ),
+            StaffDatabase(
+                name = "Bernardo Rossi",
+                age = "48",
+                position = "Ex. PA"
+            ),
+            StaffDatabase(
+                name = "Tessa A. S. Summers",
+                age = "",
+                position = ""
             )
-        ]
+        )
+        db.add_all(staffProfiles)
+        db.commit()
 
 def seedData(db):
     seedCharacter(db)
@@ -236,3 +252,4 @@ def seedData(db):
     seedNotebook(db)
     seedDocuments(db)
     seedPasswords(db)
+    seedStaffDatabase(db)

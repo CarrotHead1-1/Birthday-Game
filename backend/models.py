@@ -62,6 +62,5 @@ class StaffDatabase(Base):
     id = Column(Integer, primary_key=True, index = True)
     name = Column(String(35), nullable = False)
     age = Column(String(4), nullable = True)
-    startDate = Column(String(12), nullable = True)
-    postion = Column(String(8), nullable=True)
+    position = Column(String(8), nullable=True)
     

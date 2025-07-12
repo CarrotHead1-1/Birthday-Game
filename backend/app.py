@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 from contextlib import asynccontextmanager
 from database import SessionLocal, engine
-from models import Base, Character, JigsawPuzzle, Notebook, Documents, Password, SpyFiles
+from models import Base, Character, JigsawPuzzle, Notebook, Documents, Password, SpyFiles, StaffDatabase
 from seed import seedData
 Base.metadata.create_all(bind=engine)
 
@@ -51,8 +51,8 @@ def getProfiles(db : Session = Depends(getDb)):
         "age": chars.age,
         "description": chars.description,
         "image_path": chars.image_path
-            }
-            for chars in c]
+        }
+        for chars in c]
 
 @app.get("/characters")
 def getCharacters(db: Session = Depends(getDb)):
@@ -71,10 +71,14 @@ async def checkAnwsers(request: Request, db: Session = Depends(getDb)):
 async def checkSpyFilePassword(request: Request, db: Session = Depends(getDb)):
     body = await request.json()
     guess = body.get("guess")
-    p = db.query(Password).filter_by(name = guess.name).first()
+    name = body.get("name")
+    p = db.query(Password).filter_by(name = name).first()
 
+    if not p:
+        return {"solved": False}
+    
     if p.solved:
-        return {"correctPositions": list(p.password)}
+        return {"solved": p.solved, "correctPositions": list(p.password)}
     
     if not guess or len(guess) != len(p.password):
         return {"correctPositions": [None] * len(p.password)}
@@ -87,7 +91,7 @@ async def checkSpyFilePassword(request: Request, db: Session = Depends(getDb)):
         p.solved = True
         db.commit()
 
-    return {"correctPositions": correctPositions}
+    return {"solved": p.solved}
 
 @app.get("/notebookPuzzle")
 def getNotebookPuzzle(db : Session = Depends(getDb)):
@@ -244,7 +248,7 @@ def getSpyFiles(db: Session = Depends(getDb)):
     ]
     return files 
 
-@app.post("/checkSpyFilesUnlcoked")
+@app.post("/checkSpyFilesUnlocked")
 async def checkSpyFiles(request: Request, db: Session = Depends(getDb)):
     body = await request.json()
     fileId = body.get("id")
@@ -256,3 +260,19 @@ async def checkSpyFiles(request: Request, db: Session = Depends(getDb)):
     if p.unlocked:
         return {"unlocked": p.unlocked}
     return {"unlocked": p.unlocked}
+
+@app.get("/getStaffData")
+def getStaffData(db: Session = Depends(getDb)):
+    p = db.query(StaffDatabase).all()
+
+    staffData = [{
+        "id": staff.id,
+        "name": staff.name,
+        "age": staff.age,
+        "position": staff.position
+    }
+    for staff in p
+    ]
+
+    return staffData
+

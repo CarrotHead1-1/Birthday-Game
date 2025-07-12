@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
 export default function SpyFilesPassword() {
@@ -9,6 +9,21 @@ export default function SpyFilesPassword() {
     const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL
 
     const router = useRouter()
+
+    useEffect(() => {
+        const checkSolved = async () => {
+            const res = await fetch(`${baseURL}/checkPassword`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name: "spyfilePassword" })
+            })
+            const data = await res.json()
+            if (data.solved) {
+                router.push("/EvidenceLog/spyFiles/unlocked")
+            }
+        }
+        checkSolved()
+    }, [])
 
     const handleDigitChange = (index, value) => {
         if (value.length > 1) value = value.slice(0, 1)    // only one character
@@ -36,7 +51,7 @@ export default function SpyFilesPassword() {
         setFeedback(data)
 
         if (data.correctPositions && data.correctPositions.every(d => d !== null)) {
-            router.push("EvidenceLog/spyFiles/unlocked")
+            router.push("spyFiles/unlocked")
         }
     }
 
