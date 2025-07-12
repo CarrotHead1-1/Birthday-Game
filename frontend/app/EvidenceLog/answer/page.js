@@ -6,6 +6,7 @@ export default function AnswerPage() {
     const [characters, setCharacters] = useState([]);
     const [userGuesses, setUserGuesses] = useState(["", ""]);
     const [answers, setCorrect] = useState(null);
+
     const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL
 
     useEffect(() => {

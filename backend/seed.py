@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models import Character, JigsawPuzzle, Notebook, Documents, Password
+from models import Character, JigsawPuzzle, Notebook, Documents, Password, StaffDatabase
 
 def seedCharacter(db: Session):
     if db.query(Character).count() == 0:
@@ -212,17 +212,27 @@ def seedPasswords(db: Session):
             ),
             Password(
                 name = "biometricPassword",
-                password = "KEIB-Limited"
+                password = "KEIB Limited"
             )
         ]
 
-    
     db.add_all(passwords)
     db.commit()
+
+def seedStaffDatabase(db: Session):
+    if db.query(StaffDatabase).count() == 0:
+        staffProfiles = [
+            StaffDatabase(
+                name = "Sir Kevin Escott",
+                age = "54",
+                startDate = "",
+                position = "CEO"
+            )
+        ]
 
 def seedData(db):
     seedCharacter(db)
     seedPuzzles(db)
     seedNotebook(db)
     seedDocuments(db)
-    #seedPasswords(db)
+    seedPasswords(db)

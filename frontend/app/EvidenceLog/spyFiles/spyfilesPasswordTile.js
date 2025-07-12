@@ -29,7 +29,7 @@ export default function SpyFilesPassword() {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ guess })
+            body: JSON.stringify({ guess, name: "spyfilePassword" })
         })
 
         const data = await res.json()

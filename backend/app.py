@@ -68,11 +68,10 @@ async def checkAnwsers(request: Request, db: Session = Depends(getDb)):
     return {"correct": False}
 
 @app.post("/checkPassword")
-async def checkPassword(request: Request, db: Session = Depends(getDb)):
+async def checkSpyFilePassword(request: Request, db: Session = Depends(getDb)):
     body = await request.json()
     guess = body.get("guess")
-
-    p = db.query(Password).filter_by(name = "spyfilePassword").first()
+    p = db.query(Password).filter_by(name = guess.name).first()
 
     if p.solved:
         return {"correctPositions": list(p.password)}

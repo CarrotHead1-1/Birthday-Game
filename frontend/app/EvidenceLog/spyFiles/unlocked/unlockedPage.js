@@ -9,7 +9,7 @@ export default function SpyFilesLogPage() {
     const sections = [
         { name: "Video Files", href: "/EvidenceLog/spyFiles/unlocked/video", description: "View video Files" },
         { name: "Audio Files", href: "/EvidenceLog/spyFiles/unlocked/audio", description: "Listen to Audio Files" },
-        { name: "Staff Data", href: "EvidenceLog/spyFiles/unlocked/staffData", description: "View KEIB staff stored staff data" }
+        { name: "Staff Data", href: "/EvidenceLog/spyFiles/unlocked/staffData", description: "View KEIB staff stored staff data" }
     ];
 
     return (
