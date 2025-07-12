@@ -6,9 +6,10 @@ export default function AnswerPage() {
     const [characters, setCharacters] = useState([]);
     const [userGuesses, setUserGuesses] = useState(["", ""]);
     const [answers, setCorrect] = useState(null);
+    const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL
 
     useEffect(() => {
-        fetch(`http://localhost:8000/characters`)
+        fetch(`${baseURL}/characters`)
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data)) {
@@ -31,7 +32,7 @@ export default function AnswerPage() {
             return;
         }
 
-        const res = await fetch("http://localhost:8000/checkAnswers", {
+        const res = await fetch(`${baseURL}/checkAnswers`, {
             method: "POST",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify({ userGuesses })

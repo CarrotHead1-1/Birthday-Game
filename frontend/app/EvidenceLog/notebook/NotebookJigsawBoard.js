@@ -11,8 +11,10 @@ export default function NotebookPuzzle() {
     const [draggedIndex, setDraggedIndex] = useState(null);
     const router = useRouter();
 
+    const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL
+
     useEffect(() => {
-        fetch("http://localhost:8000/notebookPuzzle")
+        fetch(`${baseURL}/notebookPuzzle`)
             .then(res => res.json())
             .then(data => {
                 if (data.solved) {
@@ -58,7 +60,7 @@ export default function NotebookPuzzle() {
     };
 
     const check = async () => {
-        const response = await fetch("http://localhost:8000/checkNotebookPuzzle", {
+        const response = await fetch(`${baseURL}/checkNotebookPuzzle`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id: puzzle.id, tiles })
@@ -100,7 +102,7 @@ export default function NotebookPuzzle() {
                         style={{
                             width: `${pieceWidth}px`,
                             height: `${pieceHeight}px`,
-                            backgroundImage: `url(http://localhost:8000${puzzle.image_path})`,
+                            backgroundImage: `url(${baseURL}${puzzle.image_path})`,
                             backgroundSize: `${puzzle.cols * pieceWidth}px ${puzzle.rows * pieceHeight}px`,
                             backgroundPosition: `-${(tileIndex % puzzle.cols) * pieceWidth}px -${Math.floor(tileIndex / puzzle.cols) * pieceHeight}px`,
                             backgroundRepeat: "no-repeat"

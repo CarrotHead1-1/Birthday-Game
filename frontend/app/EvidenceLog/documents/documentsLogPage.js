@@ -4,9 +4,10 @@ import { useEffect, useState } from "react"
 export default function DocumentPageImages() {
     const [images, setImages] = useState([])
     const [index, setIndex] = useState(0)
+    const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL
 
     const fetchDocuments = async () => {
-        const res = await fetch("http://localhost:8000/getDocuments")
+        const res = await fetch(`${baseURL}/getDocuments`)
         const data = await res.json()
         const unlocked = data.filter(doc => !doc.locked)
         setImages(unlocked)
@@ -31,7 +32,7 @@ export default function DocumentPageImages() {
             <div className="relative w-full max-w-3xl overflow-hidden">
                 {images.length > 0 ? (
                     <img
-                        src={`http://localhost:8000${images[index].doc_path}`}
+                        src={`${baseURL}${images[index].doc_path}`}
                         alt={`Document Item ${index + 1}: ${images[index].name}`}
                         className="w-full max-h-[80vh] object-contain transition-all duration-300"
                     />

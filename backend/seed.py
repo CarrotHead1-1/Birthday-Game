@@ -209,9 +209,14 @@ def seedPasswords(db: Session):
             Password(
             name = "spyfilePassword",
             password = "123456"
+            ),
+            Password(
+                name = "biometricPassword",
+                password = "KEIB-Limited"
             )
         ]
 
+    
     db.add_all(passwords)
     db.commit()
 

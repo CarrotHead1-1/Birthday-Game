@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 export default function SpyFilesPassword() {
     const [digits, setDigits] = useState(["", "", "", "", "", ""])
     const [feedback, setFeedback] = useState(null)
+    const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL
 
     const router = useRouter()
 
@@ -23,7 +24,7 @@ export default function SpyFilesPassword() {
 
         const guess = digits.join("")
 
-        const res = await fetch("http://localhost:8000/checkPassword", {
+        const res = await fetch(`${baseURL}/checkPassword`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -35,7 +36,7 @@ export default function SpyFilesPassword() {
         setFeedback(data)
 
         if (data.correctPositions && data.correctPositions.every(d => d !== null)) {
-            router.push("/spyfiles/unlocked")
+            router.push("EvidenceLog/spyFiles/unlocked")
         }
     }
 

@@ -1,61 +1,12 @@
 
 "use client"
 
-import { useEffect, useState } from "react"
+import SpyFilesLogPage from "./unlockedPage"
 
-export default function SpyFilesPage() {
-
-    const [spyFiles, setSpyFiles] = useState([])
-
-
-    useEffect(() => {
-        const fetchSpyFiles = async () => {
-            const res = await fetch("http://localhost:8000/getSpyFiles")
-            const data = await res.json()
-            setSpyFiles(data)
-        }
-        fetchSpyFiles()
-    }, [])
-
+export default function SpyFilePage() {
     return (
-        <div className="min-h-screen bg-gray-100 p-6" >
-            <div className="max-w-4xl mx-auto bg-white rounded shadow p-6 space-y-6">
-                <h1 className="text-3xl font-bold text-center"> Spy Files </h1>
-                <p className="text-center text-gray-600"> Videos and Audio Files </p>
-
-                <div className="space-y-6">
-
-                    {spyFiles.length === 0 ? (
-                        <p className="text-center text-red-400"> No unlocked spy files found. </p>
-                    ) : (
-                        spyFiles.map(files => (
-                            <div
-                                key={files.id}
-                                className="border border-gray-200 rounded shadow p-4 bg-gray-50 space-y-2"
-                            >
-                                <h2 className="text-xl font-semibold"> {files.name} </h2>
-                                {/\.(mp4|webm|ogg)$/i.test(files.spyfile_path) ? (
-                                    <video
-                                        controls
-                                        className="w-full rounded shadow"
-                                    >
-                                        <source scr={`http://localhost:8000${files.spyfile_path}`} type="video/mp4" />
-
-                                    </video>
-                                ) : (
-                                    <audio
-                                        controls
-                                        className="w-full"
-                                    >
-                                        <source src={`http://localhost:8000${files.spyfile_path}`} type="audio.mpeg" />
-                                    </audio>
-                                )}
-                            </div>
-                        ))
-                    )}
-
-                </div>
-            </div>
+        <div className="max-w-4xl mx-auto py-6 px-4">
+            <SpyFilesLogPage />
         </div>
     )
 }

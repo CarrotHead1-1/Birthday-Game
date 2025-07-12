@@ -23,7 +23,7 @@ app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins = ["http://localhost:3000"],
+    allow_origins = ["*"],
     allow_credentials = True,
     allow_methods = ["*"],
     allow_headers = ["*"]
@@ -44,7 +44,15 @@ def getDb():
 
 @app.get("/profiles")
 def getProfiles(db : Session = Depends(getDb)):
-    return db.query(Character).all()
+    c = db.query(Character).all()
+    return [{
+        "id" : chars.id,
+        "name": chars.name,
+        "age": chars.age,
+        "description": chars.description,
+        "image_path": chars.image_path
+            }
+            for chars in c]
 
 @app.get("/characters")
 def getCharacters(db: Session = Depends(getDb)):
@@ -67,13 +75,13 @@ async def checkPassword(request: Request, db: Session = Depends(getDb)):
     p = db.query(Password).filter_by(name = "spyfilePassword").first()
 
     if p.solved:
-        return {"correctPositions": p.password}
+        return {"correctPositions": list(p.password)}
     
     if not guess or len(guess) != len(p.password):
         return {"correctPositions": [None] * len(p.password)}
 
     correctPositions = [
-        guess[i] if guess[i] == p.password[i] else None for i in range(len(p))
+        guess[i] if guess[i] == p.password[i] else None for i in range(len(p.password))
     ]
 
     if all(d is not None for d in correctPositions):
@@ -180,6 +188,7 @@ async def checkPageAccess(request: Request, db: Session = Depends(getDb)):
                 doc.locked = False
     
     #if p.id == 12:
+        #d = db.query(SpyFiles).filter(SpyFiles)
     #go to finger print file 
 
     if p.id == 13:

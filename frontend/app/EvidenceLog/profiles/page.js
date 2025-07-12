@@ -6,8 +6,12 @@ const ProfileCard = ({ }) => {
 
     const [profiles, setProfiles] = useState(null)
 
+    const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL
+
+    console.log("API Base URL:", baseURL)
+
     useEffect(() => {
-        fetch(`http://localhost:8000/profiles`)
+        fetch(`${baseURL}/profiles`)
             .then(res => res.json())
             .then(data => setProfiles(data))
     }, [])
@@ -25,14 +29,14 @@ const ProfileCard = ({ }) => {
                 {profiles.map((char) => (
                     <li key={char.id} className="flex border rounded-lg shadow p-4 items-center bg-white">
                         <img
-                            src={`http://localhost:8000${char.image_path}`}
+                            src={`${baseURL}${char.image_path}`}
                             alt={char.name}
                             className="w-32 h-32 object-cover rounded mr-6"
                         />
 
                         <div>
                             <h2 className="text-xl font-bold"> {char.name} , Age: {char.age} </h2>
-                            <p className="text-grey-700"> {char.description} </p>
+                            <p className="text-gray-700"> {char.description} </p>
                         </div>
                     </li>
 
